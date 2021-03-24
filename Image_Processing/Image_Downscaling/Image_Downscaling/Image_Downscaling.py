@@ -1,13 +1,19 @@
 
-import matplotlib.pyplot as plt
-import cv2
-import numpy as np
 
-from PIL import Image
-from skimage import data, color
-from skimage.transform import rescale, resize, downscale_local_mean
+# import cv2
+# from skimage import data, color
+# from skimage.transform import rescale, resize, downscale_local_mean
 
-PATH = "4K_1.jpg"
+# import matplotlib.pyplot as plt
+# import numpy as np
+# import os
+
+# from PIL import Image
+
+
+# dir_path = os.path.dirname(os.path.realpath(__file__))
+# PHOTO_DIR = "4K_1.jpg"
+
 
 #img_array = cv2.imread(PATH,cv2.IMREAD_COLOR)
 
@@ -109,48 +115,79 @@ PATH = "4K_1.jpg"
 ##############################################################################################################
 ##############################################################################################################
 
+import matplotlib.pyplot as plt
+import numpy as np
+import os
 
-def Data_Decimation(image, kernel_size):
-    try:
-        downsampled_image = np.zeros((image.shape[0] // kernel_size[0],image.shape[1] // kernel_size[1], image.shape[2]), dtype = np.int32)
-    except:
-        print("Image has to have a three dimensions, x,y and channels e.g: If It is in RGB scale then shape should looks like: (x,y,3)")
+from PIL import Image
 
-    for channels in range(image_data.shape[2]):
-        for i in range(downsampled_image.shape[0]):
-            for j in range(downsampled_image.shape[1]):
-                downsampled_image[i][j][channels] = image[i * kernel_size[0]][j * kernel_size[1]][channels]
-                #print(i * kernel_size[0], j * kernel_size[1], sep = " | ")
-
-    return downsampled_image
+import OpenEXR
 
 
 
-Kernel_Size = (24,24)
-
-image = Image.open(PATH)
-# convert image to numpy array
-image_data = np.asarray(image, dtype='uint8')
-#image_data = np.zeros((6,6,3), dtype='int32')
-Downsampled_Image = Data_Decimation(image_data,Kernel_Size)
 
 
-fig, axes = plt.subplots(nrows=1, ncols=2)
-ax = axes.ravel()
-
-ax[0].imshow(image_data)
-ax[0].set_title("Oryginal")
-ax[0].set_xlabel(str(image_data.shape))
-
-ax[1].imshow(Downsampled_Image)
-ax[1].set_title("Downsampled by {0}x{0}".format(Kernel_Size[0]))
-ax[1].set_xlabel(str(Downsampled_Image.shape))
+dir_path = os.path.dirname(os.path.realpath(__file__))
+# PHOTO_DIR = "4K_1.jpg"
+# PHOTO_DIR = "4K_3840x2160.jpg"
+PHOTO_DIR = "00000.exr"
 
 
-plt.tight_layout()
-figManager = plt.get_current_fig_manager()
-figManager.window.showMaximized()
-plt.show()
+# print(len(OpenEXR.InputFile(os.path.join(dir_path, PHOTO_DIR)).channel('R')))
 
-Downsampled_Image = Image.fromarray(Downsampled_Image.astype(np.uint8))
-Downsampled_Image.save("Downsampled_{0}x{0}.jpg".format(Kernel_Size[0]))
+
+my_photo = OpenEXR.InputFile(os.path.join(dir_path, PHOTO_DIR))
+
+(r,g,b) = my_photo.channels("RGB")
+
+print(len(r), len(g), len(b))
+
+
+
+# def Data_Decimation(image, kernel_size):
+#     try:
+#         downsampled_image = np.zeros((image.shape[0] // kernel_size[0], image.shape[1] // kernel_size[1], image.shape[2]), dtype = np.int32)
+#     except:
+#         print("Image has to have a three dimensions, x,y and channels e.g: If It is in RGB scale then shape should looks like: (x,y,3)")
+
+#     anchor_x = kernel_size[0]
+#     anchor_y = kernel_size[1]
+
+#     for channels in range(image_data.shape[2]): #petla w srodek, bo kolory sa obok R G B | R G B | R G B
+#         for i in range(downsampled_image.shape[0]):
+#             for j in range(downsampled_image.shape[1]):
+#                 downsampled_image[i][j][channels] = image[i * anchor_x][j * anchor_y][channels]
+#                 #print(i * kernel_size[0], j * kernel_size[1], sep = " | ")
+
+#     return downsampled_image
+
+
+# Kernel_Size = (8,8)
+
+# # image = Image.open(os.path.join(r'C:\Users\DAndrysiak\!REPOS\Python\Image_Processing\Image_Downscaling\Image_Downscaling\4K_1.jpg'))
+# image = Image.open(os.path.join(dir_path, PHOTO_DIR))
+# # convert image to numpy array
+# image_data = np.asarray(image, dtype='uint8')
+# #image_data = np.zeros((6,6,3), dtype='int32')
+# Downsampled_Image = Data_Decimation(image_data,Kernel_Size)
+
+
+# fig, axes = plt.subplots(nrows=1, ncols=2)
+# ax = axes.ravel()
+
+# ax[0].imshow(image_data)
+# ax[0].set_title("Oryginal")
+# ax[0].set_xlabel(str(image_data.shape))
+
+# ax[1].imshow(Downsampled_Image)
+# ax[1].set_title("Downsampled by {0}x{0}".format(Kernel_Size[0]))
+# ax[1].set_xlabel(str(Downsampled_Image.shape))
+
+
+# plt.tight_layout()
+# figManager = plt.get_current_fig_manager()
+# figManager.window.showMaximized()
+# plt.show()
+
+# Downsampled_Image = Image.fromarray(Downsampled_Image.astype(np.uint8))
+# Downsampled_Image.save(os.path.join(dir_path,'Downsampled_{0}x{0}.jpg'.format(Kernel_Size[0])))
