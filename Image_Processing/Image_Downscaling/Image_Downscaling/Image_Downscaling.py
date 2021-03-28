@@ -118,76 +118,79 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import os
-
-from PIL import Image
-
+import cv2
+import torch
 import OpenEXR
 
+from PIL import Image
 
 
 
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 # PHOTO_DIR = "4K_1.jpg"
-# PHOTO_DIR = "4K_3840x2160.jpg"
-PHOTO_DIR = "00000.exr"
+PHOTO_DIR = "4K_3840x2160.jpg"
+# PHOTO_DIR = "00000_3840x2160.exr"
 
 
-# print(len(OpenEXR.InputFile(os.path.join(dir_path, PHOTO_DIR)).channel('R')))
+def data_decimation(img, size, kernel_size, anchor):
+    """Decimate a .exr file by given scale
+    
+        Args:
+            img: input photo to decimate 
+            size: shape of img
+            kernel_size: determines a matrix to decimate (how rescale the image will be)
+            anchor: position of pixel around of center of the image
+            # 00 01
+            # 10 11
+    """
+    
+    decimated_tensor = torch.zeros((size[0] // kernel_size[0], size[1] // kernel_size[1], size[2]), dtype=torch.float16) 
+   
+
+    step_x = kernel_size[0]
+    step_y = kernel_size[1]
+
+    offset_x = (kernel_size[0] // 2) - 1
+    offset_y = (kernel_size[1] // 2) - 1
+    
+    for i in range(decimated_tensor.shape[0]): 
+        for j in range(decimated_tensor.shape[1]):
+            for channel in range(decimated_tensor.shape[2]):  #Channel e.g: R G B, then we have a 3-channel image
+                decimated_tensor[i][j][channel] = img[i* step_x + offset_x + anchor[0]][j * step_y + offset_y + anchor[1]][channel]
+
+    return decimated_tensor
 
 
-my_photo = OpenEXR.InputFile(os.path.join(dir_path, PHOTO_DIR))
-
-(r,g,b) = my_photo.channels("RGB")
-
-print(len(r), len(g), len(b))
-
-
-
-# def Data_Decimation(image, kernel_size):
-#     try:
-#         downsampled_image = np.zeros((image.shape[0] // kernel_size[0], image.shape[1] // kernel_size[1], image.shape[2]), dtype = np.int32)
-#     except:
-#         print("Image has to have a three dimensions, x,y and channels e.g: If It is in RGB scale then shape should looks like: (x,y,3)")
-
-#     anchor_x = kernel_size[0]
-#     anchor_y = kernel_size[1]
-
-#     for channels in range(image_data.shape[2]): #petla w srodek, bo kolory sa obok R G B | R G B | R G B
-#         for i in range(downsampled_image.shape[0]):
-#             for j in range(downsampled_image.shape[1]):
-#                 downsampled_image[i][j][channels] = image[i * anchor_x][j * anchor_y][channels]
-#                 #print(i * kernel_size[0], j * kernel_size[1], sep = " | ")
-
-#     return downsampled_image
-
-
-# Kernel_Size = (8,8)
-
-# # image = Image.open(os.path.join(r'C:\Users\DAndrysiak\!REPOS\Python\Image_Processing\Image_Downscaling\Image_Downscaling\4K_1.jpg'))
+Kernel_Size = (8,8)
 # image = Image.open(os.path.join(dir_path, PHOTO_DIR))
-# # convert image to numpy array
-# image_data = np.asarray(image, dtype='uint8')
-# #image_data = np.zeros((6,6,3), dtype='int32')
-# Downsampled_Image = Data_Decimation(image_data,Kernel_Size)
+image = cv2.imread(str(os.path.join(dir_path, PHOTO_DIR)),  cv2.IMREAD_ANYCOLOR | cv2.IMREAD_ANYDEPTH)
+# my_photo = OpenEXR.InputFile(os.path.join(dir_path, PHOTO_DIR))
+# convert image to numpy array
+image_data = np.asarray(image, dtype='uint8')
+
+print(image.shape)
+
+# print(image_data.shape)
+Downsampled_Image = data_decimation(image_data, image_data.shape, Kernel_Size, (0,0))
 
 
-# fig, axes = plt.subplots(nrows=1, ncols=2)
-# ax = axes.ravel()
+fig, axes = plt.subplots(nrows=1, ncols=2)
+ax = axes.ravel()
 
-# ax[0].imshow(image_data)
-# ax[0].set_title("Oryginal")
-# ax[0].set_xlabel(str(image_data.shape))
+ax[0].imshow(image_data)
+ax[0].set_title("Oryginal")
+ax[0].set_xlabel(str(image_data.shape))
 
-# ax[1].imshow(Downsampled_Image)
-# ax[1].set_title("Downsampled by {0}x{0}".format(Kernel_Size[0]))
-# ax[1].set_xlabel(str(Downsampled_Image.shape))
+ax[1].imshow(Downsampled_Image)
+ax[1].set_title("Downsampled by {0}x{0}".format(Kernel_Size[0]))
+ax[1].set_xlabel(str(Downsampled_Image.shape))
 
 
-# plt.tight_layout()
-# figManager = plt.get_current_fig_manager()
-# figManager.window.showMaximized()
-# plt.show()
+plt.tight_layout()
+figManager = plt.get_current_fig_manager()
+figManager.window.showMaximized()
+plt.show()
 
 # Downsampled_Image = Image.fromarray(Downsampled_Image.astype(np.uint8))
 # Downsampled_Image.save(os.path.join(dir_path,'Downsampled_{0}x{0}.jpg'.format(Kernel_Size[0])))
