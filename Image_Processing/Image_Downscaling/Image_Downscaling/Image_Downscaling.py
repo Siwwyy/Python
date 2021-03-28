@@ -145,7 +145,7 @@ def data_decimation(img, size, kernel_size, anchor):
             # 10 11
     """
     
-    decimated_tensor = torch.zeros((size[0] // kernel_size[0], size[1] // kernel_size[1], size[2]), dtype=torch.float16) 
+    decimated_tensor = np.zeros((size[0] // kernel_size[0], size[1] // kernel_size[1], size[2]), dtype='uint8') 
    
 
     step_x = kernel_size[0]
@@ -167,20 +167,20 @@ Kernel_Size = (8,8)
 image = cv2.imread(str(os.path.join(dir_path, PHOTO_DIR)),  cv2.IMREAD_ANYCOLOR | cv2.IMREAD_ANYDEPTH)
 # my_photo = OpenEXR.InputFile(os.path.join(dir_path, PHOTO_DIR))
 # convert image to numpy array
-image_data = np.asarray(image, dtype='uint8')
+#image_data = np.asarray(image, dtype='uint8')
 
 print(image.shape)
 
 # print(image_data.shape)
-Downsampled_Image = data_decimation(image_data, image_data.shape, Kernel_Size, (0,0))
+Downsampled_Image = data_decimation(image, image.shape, Kernel_Size, (0,0))
 
 
 fig, axes = plt.subplots(nrows=1, ncols=2)
 ax = axes.ravel()
 
-ax[0].imshow(image_data)
+ax[0].imshow(image)
 ax[0].set_title("Oryginal")
-ax[0].set_xlabel(str(image_data.shape))
+ax[0].set_xlabel(str(image.shape))
 
 ax[1].imshow(Downsampled_Image)
 ax[1].set_title("Downsampled by {0}x{0}".format(Kernel_Size[0]))
@@ -192,5 +192,6 @@ figManager = plt.get_current_fig_manager()
 figManager.window.showMaximized()
 plt.show()
 
-# Downsampled_Image = Image.fromarray(Downsampled_Image.astype(np.uint8))
-# Downsampled_Image.save(os.path.join(dir_path,'Downsampled_{0}x{0}.jpg'.format(Kernel_Size[0])))
+
+#Downsampled_Image = Image.fromarray(Downsampled_Image.astype(np.uint8))
+#Downsampled_Image.save(os.path.join(dir_path,'Downsampled_{0}x{0}.jpg'.format(Kernel_Size[0])))
