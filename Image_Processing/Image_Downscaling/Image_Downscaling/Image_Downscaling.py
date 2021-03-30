@@ -197,12 +197,12 @@ print(input)
 x = torch.linspace(-1, 1, width)
 y = torch.linspace(-1, 1, height)
 
-print(x)
-print(y)
+print("Tensor x:",x)
+print("Tensor y:",y)
 
 #create a offsets
-x_offset = x[::kernel_size[0]]
-y_offset = y[::kernel_size[1]]
+x_offset = x[1::kernel_size[0]]
+y_offset = y[1::kernel_size[1]]
 
 #mesh grid for pixel indexes of x and y coordinates
 meshx, meshy = torch.meshgrid((x_offset, y_offset))
