@@ -129,55 +129,87 @@ width = 4
 height = 4
 kernel_size = (2,2)
 
-# print("Input")
-input = torch.arange(width*height).view(1,1,height,width).float()#.view(1, 1, 4, 4).float()
-print(input.shape, input, sep='\n')
+## print("Input")
+#input = torch.arange(width*height).view(1,1,height,width).float()#.view(1, 1, 4, 4).float()
+#print(input.shape, input, sep='\n')
 
-print()
-print()
-print("Casted px indexes")
+#print()
+#print()
+#print("Casted px indexes")
+#x = torch.linspace(-1, 1, width)
+#y = torch.linspace(-1, 1, height)
+#print(x)
+#print(y)
+#print()
+#print()
+
+
+
+
+
+#print()
+#print()
+#print("Offsets")
+#x_offset = x[::kernel_size[0]]
+#y_offset = y[::kernel_size[1]]
+#print(x_offset, y_offset, sep='\n')
+#print()
+#print()
+
+#print()
+#print()
+#print("Mesh_x and mesh_y")
+#meshx, meshy = torch.meshgrid((x_offset, y_offset))
+#print(meshx, meshy, sep='\n')
+#print()
+#print()
+
+
+
+#print()
+#print()
+#print("Grid")
+## grid = torch.stack(torch.meshgrid(torch.linspace(-1,1,kernel_size[0]), torch.linspace(-1,1,kernel_size[0]))[::-1],dim=-1).unsqueeze(0)
+## grid1 = torch.stack(torch.meshgrid(torch.linspace(-1,1,4), torch.linspace(-1,1,4))[::-1],dim=-1).unsqueeze(0)
+#grid = torch.stack((meshy, meshx), dim=-1).unsqueeze(0)
+## grid1 = torch.stack(torch.meshgrid(torch.linspace(-1,1,4), torch.linspace(-1,1,4))[::-1],dim=-1).unsqueeze(0)
+#print(grid.shape, grid, sep='\n')
+#print()
+#print()
+
+##print_grid(grid)
+
+#output = torch.nn.functional.grid_sample(input, grid, align_corners=True)
+#print(output.shape, output, sep='\n')
+
+
+
+width = 8
+height = 8
+kernel_size = (4,4)
+
+
+#create a input matrix or photo
+input = torch.arange(width*height).view(1,1,height,width).float()
+print(input)
+
+#find possible pixel indexes from discrete to continuous
 x = torch.linspace(-1, 1, width)
 y = torch.linspace(-1, 1, height)
+
 print(x)
 print(y)
-print()
-print()
 
+#create a offsets
+x_offset = x[::kernel_size[0]]
+y_offset = y[::kernel_size[1]]
 
-
-
-
-print()
-print()
-print("Offsets")
-x_offset = x[:kernel_size[0]]
-y_offset = y[:kernel_size[1]]
-print(x_offset, y_offset, sep='\n')
-print()
-print()
-
-print()
-print()
-print("Mesh_x and mesh_y")
+#mesh grid for pixel indexes of x and y coordinates
 meshx, meshy = torch.meshgrid((x_offset, y_offset))
-print(meshx, meshy, sep='\n')
-print()
-print()
 
+#coordinates grid
+grid = torch.stack((meshy, meshx), dim=-1).unsqueeze(0)
 
-
-print()
-print()
-print("Grid")
-# grid = torch.stack(torch.meshgrid(torch.linspace(-1,1,kernel_size[0]), torch.linspace(-1,1,kernel_size[0]))[::-1],dim=-1).unsqueeze(0)
-# grid1 = torch.stack(torch.meshgrid(torch.linspace(-1,1,4), torch.linspace(-1,1,4))[::-1],dim=-1).unsqueeze(0)
-grid = torch.stack((meshx, meshy), dim=-1).unsqueeze(0)
-# grid1 = torch.stack(torch.meshgrid(torch.linspace(-1,1,4), torch.linspace(-1,1,4))[::-1],dim=-1).unsqueeze(0)
-print(grid.shape, grid, sep='\n')
-print()
-print()
-
-
-
-# output = torch.nn.functional.grid_sample(input, grid, align_corners=True)
-# print(output.shape, output, sep='\n')
+#final output
+output = torch.nn.functional.grid_sample(input, grid, align_corners=True)
+print(output.shape, output, sep='\n')
