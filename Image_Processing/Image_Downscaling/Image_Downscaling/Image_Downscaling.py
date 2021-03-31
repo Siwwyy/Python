@@ -153,13 +153,13 @@ def print_grid(grid):
             print("X: {0:.1f} Y: {1:.1f}".format(grid[0][i][j][0],grid[0][i][j][1]))
 
 
-def print_input(input_img):
-    for i in range(input_img.shape[2]):
-        _str = " "
-        for j in range(input_img.shape[3]):
-            _str += str(input_img[0][0][i][j]) + ' '
+# def print_input(input_img):
+#     for i in range(input_img.shape[2]):
+#         _str = " "
+#         for j in range(input_img.shape[3]):
+#             _str += str(input_img[0][0][i][j]) + ' '
         
-        print(_str)
+#         print(_str)
 
 
 
