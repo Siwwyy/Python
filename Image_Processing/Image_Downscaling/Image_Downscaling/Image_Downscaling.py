@@ -23,37 +23,37 @@ PHOTO_DIR = "4K_3840x2160.jpg"
 # PHOTO_DIR = "00000_3840x2160.exr"
 
 
-def data_decimation(img, kernel_size, anchor, dtype=torch.float32):
-    """Decimate a .exr file by given scale
+# def data_decimation(img, kernel_size, anchor, dtype=torch.float32):
+#     """Decimate a .exr file by given scale
     
-        Args:
-            img: input photo to decimate
-            kernel_size: determines a matrix to decimate (how rescale the image will be)
-            anchor: position of pixel around of center of the image (x,y)
-            # x,y x,y
-            # 0,0 0,1
-            # 1,0 1,1
-    """
+#         Args:
+#             img: input photo to decimate
+#             kernel_size: determines a matrix to decimate (how rescale the image will be)
+#             anchor: position of pixel around of center of the image (x,y)
+#             # x,y x,y
+#             # 0,0 0,1
+#             # 1,0 1,1
+#     """
     
-    size = img.shape
-    decimated_tensor = torch.zeros((size[0] // kernel_size[1], size[1] // kernel_size[0], size[2]), dtype=dtype) 
+#     size = img.shape
+#     decimated_tensor = torch.zeros((size[0] // kernel_size[1], size[1] // kernel_size[0], size[2]), dtype=dtype) 
    
-    step_x = kernel_size[0]  #determines kernel step size rightwards x axis of image
-    step_y = kernel_size[1]  #determines kernel step size downwards y axis of image
+#     step_x = kernel_size[0]  #determines kernel step size rightwards x axis of image
+#     step_y = kernel_size[1]  #determines kernel step size downwards y axis of image
 
-    offset_x = (kernel_size[0] // 2) - 1  #determines which id in x axis will be taken for given pixel position
-    offset_y = (kernel_size[1] // 2) - 1  #determines which id in y axis will be taken for given pixel position
+#     offset_x = (kernel_size[0] // 2) - 1  #determines which id in x axis will be taken for given pixel position
+#     offset_y = (kernel_size[1] // 2) - 1  #determines which id in y axis will be taken for given pixel position
 
-    x = torch.arange(start=img[0][0][0], end=img[0][-1][0], step=step_x, dtype=dtype)
+#     x = torch.arange(start=img[0][0][0], end=img[0][-1][0], step=step_x, dtype=dtype)
 
-    print(x)
+#     print(x)
     
-    # for i in range(decimated_tensor.shape[0]): 
-    #     for j in range(decimated_tensor.shape[1]):
-    #         for channel in range(decimated_tensor.shape[2]):  #Channel e.g: R G B, then we have a 3-channel image
-    #             decimated_tensor[i][j][channel] = img[i * step_y + offset_y + anchor[1]][j * step_x + offset_x + anchor[0]][channel]
+#     # for i in range(decimated_tensor.shape[0]): 
+#     #     for j in range(decimated_tensor.shape[1]):
+#     #         for channel in range(decimated_tensor.shape[2]):  #Channel e.g: R G B, then we have a 3-channel image
+#     #             decimated_tensor[i][j][channel] = img[i * step_y + offset_y + anchor[1]][j * step_x + offset_x + anchor[0]][channel]
        
-    return decimated_tensor
+#     return decimated_tensor
 
 
 # Kernel_Size = (2,2)
@@ -108,11 +108,58 @@ def data_decimation(img, kernel_size, anchor, dtype=torch.float32):
 
 
 
+def image_decimation(img, kernel_size, anchor, dtype=torch.float32):
+    """Decimate a .exr file by given scale
+    
+        Args:
+            img: input photo to decimate
+            kernel_size: determines a matrix to decimate (how rescale the image will be)
+            anchor: position of pixel around of center of the image (x,y)
+            # x,y x,y
+            # 0,0 0,1
+            # 1,0 1,1
+    """
+   
+    step_x = kernel_size[0]  #determines kernel step size rightwards x axis of image
+    step_y = kernel_size[1]  #determines kernel step size downwards y axis of image
+
+    #find possible pixel indexes from discrete to continuous
+    x = torch.linspace(-1, 1, width)
+    y = torch.linspace(-1, 1, height)
+
+    #create a offsets
+    x_offset = x[(kernel_size[0] // 2) - 1::step_x + anchor[0]]     #determines which id in x axis will be taken for given pixel position
+    y_offset = y[(kernel_size[1] // 2) - 1::step_y + anchor[1]]     #determines which id in y axis will be taken for given pixel position
+
+    #mesh grid for pixel indexes of x and y coordinates
+    meshx, meshy = torch.meshgrid((x_offset, y_offset))
+
+    #coordinates grid
+    grid = torch.stack((meshy, meshx), dim=-1).unsqueeze(0)
+
+    #final output
+    decimated_tensor = torch.nn.functional.grid_sample(input, grid, align_corners=True)
+    print(decimated_tensor.shape, decimated_tensor, sep='\n')
+
+
+    return decimated_tensor
+
+
+
 def print_grid(grid):
     for i in range(grid.shape[1]):
         print("---------------------------")
         for j in range(grid.shape[2]):
             print("X: {0:.1f} Y: {1:.1f}".format(grid[0][i][j][0],grid[0][i][j][1]))
+
+
+def print_input(input_img):
+    for i in range(input_img.shape[2]):
+        _str = " "
+        for j in range(input_img.shape[3]):
+            _str += str(input_img[0][0][i][j]) + ' '
+        
+        print(_str)
 
 
 
@@ -125,9 +172,9 @@ def print_grid(grid):
 '''
 
 
-width = 4
-height = 4
-kernel_size = (2,2)
+# width = 4
+# height = 4
+# kernel_size = (2,2)
 
 ## print("Input")
 #input = torch.arange(width*height).view(1,1,height,width).float()#.view(1, 1, 4, 4).float()
@@ -186,30 +233,38 @@ kernel_size = (2,2)
 
 width = 8
 height = 8
-kernel_size = (4,4)
+kernel_size = (8,8)
 
 
 #create a input matrix or photo
 input = torch.arange(width*height).view(1,1,height,width).float()
-print(input)
+# print(input)
+# print(input.shape)
+print_input(input)
 
-#find possible pixel indexes from discrete to continuous
-x = torch.linspace(-1, 1, width)
-y = torch.linspace(-1, 1, height)
 
-print("Tensor x:",x)
-print("Tensor y:",y)
+#Load photo
 
-#create a offsets
-x_offset = x[1::kernel_size[0]]
-y_offset = y[1::kernel_size[1]]
+# Decimated = image_decimation(input, kernel_size, (0,0), torch.uint8)
 
-#mesh grid for pixel indexes of x and y coordinates
-meshx, meshy = torch.meshgrid((x_offset, y_offset))
 
-#coordinates grid
-grid = torch.stack((meshy, meshx), dim=-1).unsqueeze(0)
+# #find possible pixel indexes from discrete to continuous
+# x = torch.linspace(-1, 1, width)
+# y = torch.linspace(-1, 1, height)
 
-#final output
-output = torch.nn.functional.grid_sample(input, grid, align_corners=True)
-print(output.shape, output, sep='\n')
+# print("Tensor x:",x)
+# print("Tensor y:",y)
+
+# #create a offsets
+# x_offset = x[1::kernel_size[0]]
+# y_offset = y[1::kernel_size[1]]
+
+# #mesh grid for pixel indexes of x and y coordinates
+# meshx, meshy = torch.meshgrid((x_offset, y_offset))
+
+# #coordinates grid
+# grid = torch.stack((meshy, meshx), dim=-1).unsqueeze(0)
+
+# #final output
+# output = torch.nn.functional.grid_sample(input, grid, align_corners=True)
+# print(output.shape, output, sep='\n')
