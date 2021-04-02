@@ -231,16 +231,16 @@ def print_grid(grid):
 
 
 
-width = 8
-height = 8
-kernel_size = (8,8)
+# width = 8
+# height = 8
+# kernel_size = (8,8)
 
 
-#create a input matrix or photo
-input = torch.arange(width*height).view(1,1,height,width).float()
-# print(input)
-# print(input.shape)
-print_input(input)
+# #create a input matrix or photo
+# input = torch.arange(width*height).view(1,1,height,width).float()
+# # print(input)
+# # print(input.shape)
+# print_input(input)
 
 
 #Load photo
