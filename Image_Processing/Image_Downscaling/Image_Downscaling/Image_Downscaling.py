@@ -474,8 +474,6 @@ def image_decimate(tensorHr, KernelSize, frame_index):
 
 
 
-
-
 # MY
 def test_generate_sequence(kernel_size, length:int):
     """
@@ -489,15 +487,19 @@ def test_generate_sequence(kernel_size, length:int):
     return _seq
 
 
+
+
 #TEST
 
 kernel_size = (8,8)
 length = 50
 
-
-
-
 sequence = test_generate_sequence(kernel_size, length)
+
+
+numbers = np.zeros((length), dtype=np.uint32)
+for i in range(0, length):
+    numbers[i] = np.uint32(i+1)
 
 
 from math import log, floor, ceil, fmod
@@ -528,23 +530,70 @@ def halton(dim, nbpts):
     return h.reshape(nbpts, dim)
 
 
-x = halton(2, length)
+other_halton = halton(2, length)
 
 
-fig, axes = plt.subplots(nrows=1, ncols=2)
+fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(15,15))
 ax = axes.ravel()
 
-ax[0].plot(sequence[:length, 0], sequence[:length, 1],'o', color='red')
-ax[0].set_title("uniform-distribution 1 ({0})".format(length))
+
+ax[0].plot(sequence[:length, 0], sequence[:length, 1], 'o', color='red', label='Position of sequence point')
+ax[0].set_title("uniform-distribution our ({0})".format(length))
+ax[0].legend()
+counter = 0
+for x, y in zip(sequence[:,0], sequence[:, 1]):
+    coords = '[' + str(numbers[counter]) + '|' + str(round(x,2)) + '|' + str(round(y,2)) + ']'
+    #ax[0].text(x, y, coords, color="red", fontsize=12)
+    ax[0].text(x, y, str(numbers[counter]), color="black", fontsize=12)
+    counter = counter + 1
 
 
-#ax[1].figure()
-ax[1].plot(x[:length, 0], x[:length, 1],'o', color='red')
-ax[1].set_title("uniform-distribution 2 ({0})".format(length))
 
+ax[1].plot(other_halton[:length, 0], other_halton[:length, 1], 'x', color='green', label='Position of sequence point')
+ax[1].set_title("uniform-distribution other halton ({0})".format(length))
+ax[1].legend()
+counter = 0
+for x, y in zip(other_halton[:,0], other_halton[:, 1]):
+    coords = '[' + str(numbers[counter]) + '|' + str(round(x,2)) + '|' + str(round(y,2)) + ']'
+    #ax[1].text(x, y, coords, color="red", fontsize=12)
+    ax[1].text(x, y, str(numbers[counter]), color="black", fontsize=12)
+    counter = counter + 1
 
-plt.tight_layout()
-figManager = plt.get_current_fig_manager()
-figManager.window.showMaximized()
+#plt.tight_layout()
+#figManager = plt.get_current_fig_manager()
+#figManager.window.showMaximized()
 plt.show()
 
+
+#fig = plt.subplots(figsize=(15,15))
+
+#minimum_a_x = np.min(other_halton[:,0])
+#maximum_b_x = np.max(other_halton[:,0])
+
+#minimum_a_y = np.min(other_halton[:,1])
+#maximum_b_y = np.max(other_halton[:,1])
+
+#minimum_c_x = np.min(sequence[:,0])
+#maximum_d_x = np.max(sequence[:,0])
+
+#minimum_c_y = np.min(sequence[:,1])
+#maximum_d_y = np.max(sequence[:,1])
+
+
+
+#other_halton[:,0] = ((other_halton[:,0] - minimum_a_x)*(maximum_d_x - minimum_c_x) ) / (maximum_b_x - minimum_a_x) 
+#other_halton[:,1] = ((other_halton[:,1] - minimum_a_y)*(maximum_d_y - minimum_c_y) ) / (maximum_b_y - minimum_a_y) 
+
+#plt.plot(sequence[:length, 0], sequence[:length, 1], 'o')
+#plt.plot(other_halton[:length, 0], other_halton[:length, 1], 'x')
+#plt.title("uniform-distribution our ({0})".format(length))
+#counter = 0
+#for i in range(0, length):
+#    #coords = '[' + str(numbers[counter]) + '|' + str(round(x,2)) + '|' + str(round(y,2)) + ']'
+#    #plt.text(x, y, coords, color="red", fontsize=12)
+#    plt.text(sequence[i,0], sequence[i,1], str(numbers[counter]), color="black", fontsize=12)
+#    plt.text(other_halton[i,0], other_halton[i,1], str(numbers[counter]), color="black", fontsize=12)
+#    counter = counter + 1
+
+
+#plt.show()
