@@ -399,17 +399,17 @@ def halton_sequence(frame_index, KernelSize):
         Return:
             (x,y): returns a value of pixel coordinate
     """
-    #jitter_index = 1 + (frame_index & 0xf)
-    jitter_index = frame_index
+    jitter_index = 1 + (frame_index & 0xf)
+    # jitter_index = frame_index
 
     jitter_x = (2 * halton(jitter_index, 2)) - 1
     jitter_y = (2 * halton(jitter_index, 3)) - 1
 
-    #x = int(KernelSize[0] // 2 * jitter_x + 0.5)
-    #y = int(KernelSize[1] // 2 * jitter_y + 0.5)
+    x = int(KernelSize[0] // 2 * jitter_x + 0.5)
+    y = int(KernelSize[1] // 2 * jitter_y + 0.5)
 
-    x = KernelSize[0] // 2 * jitter_x + 0.5
-    y = KernelSize[1] // 2 * jitter_y + 0.5
+    # x = KernelSize[0] // 2 * jitter_x + 0.5
+    # y = KernelSize[1] // 2 * jitter_y + 0.5
 
     return (x,y)
 
@@ -487,14 +487,27 @@ def test_generate_sequence(kernel_size, length:int):
     return _seq
 
 
+def get_halton_sequence(length:int, KernelSize):
+    """
+        Functions generates a np.zeros of halton's sequence
+    """
+    sequence = np.zeros((length,2))
+    
+    for i in range(length):
+        sequence[i] = halton_sequence(i, KernelSize)
+    print(sequence)
+    return sequence
+
 
 
 #TEST
 
 kernel_size = (8,8)
-length = 50
+length = 16
 
-sequence = test_generate_sequence(kernel_size, length)
+# sequence = test_generate_sequence(kernel_size, length)
+
+sequence = get_halton_sequence(length,kernel_size)
 
 
 numbers = np.zeros((length), dtype=np.uint32)
