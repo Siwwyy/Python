@@ -494,8 +494,8 @@ def transpose(x:Tensor) -> Tensor:
     return torch.transpose(x, len(x.shape) - 2, len(x.shape) - 1)
 
 
-t_3x3_transposed = transpose(t_3x3)
-t_3x3_transposed
+t_3x3_transposed = transpose(t_3x3.clone())
+print(t_3x3_transposed)
 
 
 def rotate(x:Tensor, probability:torch.float16, degrees:torch.float16) -> Tensor:
@@ -504,5 +504,5 @@ def rotate(x:Tensor, probability:torch.float16, degrees:torch.float16) -> Tensor
     return Rotate(p=probability,draw=degrees)(x)
 
 
-t_3x3_rotate = rotate(t_3x3, 1., 45.)
-t_3x3_rotate
+t_3x3_rotate = rotate(t_3x3.clone(), 1., 90.)
+print(t_3x3_rotate)
