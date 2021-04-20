@@ -126,7 +126,7 @@ def show_img(img, **kwargs):
             None
     '''
     show_image(img.squeeze(0), **kwargs)
-    plt.show() 
+    #plt.show() 
 
 
 
@@ -204,23 +204,24 @@ timg_flipped = const_flip_img(img.float())
 print(timg_flipped.shape)
 show_img(timg_flipped, title="Flipped {0}".format(timg_flipped.shape))
 
-#test_eq(const_flip_img(img,split_idx=0), tensor([[1.,0., 0.,1]]) -1)
-
-const_brightness_img = Brightness(p=1.,draw=40)
-timg_brightness = const_brightness_img(img.float())
-print(timg_brightness.shape)
-show_img(timg_brightness, title="Brightness {0}".format(timg_brightness.shape))
-
 
 
 y = img.brightness(draw=0.9, p=1.)
 show_img(y, title="Brightness {0}".format(y.shape))
-  
 
 a = img.contrast(draw=2., p=1.)
 show_img(a, title="Contrast {0}".format(a.shape))
 
-#show_img(img)
+
+_,axs = subplots(2, 4)
+for i,ax in enumerate(axs.flatten()):
+    #print(i)
+    t = img.dihedral(k=(i+1))
+    show_image(t.squeeze(0), ctx=ax, title="Nr: {0}".format(i+1))
+
+plt.show()
+#t = img.dihedral(k=)
+#show_img(t, title="Dihedral {0}".format(t.shape))
 
 
 
