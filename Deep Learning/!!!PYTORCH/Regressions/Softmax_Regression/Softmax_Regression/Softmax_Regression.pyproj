@@ -12,6 +12,7 @@
     <Name>Softmax_Regression</Name>
     <RootNamespace>Softmax_Regression</RootNamespace>
     <InterpreterId>CondaEnv|CondaEnv|pytorch_env</InterpreterId>
+    <SuppressEnvironmentCreationPrompt>True</SuppressEnvironmentCreationPrompt>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
