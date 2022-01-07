@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32002.261
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Regularization_Classification", "Regularization_Classification\Regularization_Classification.pyproj", "{024F6DF3-0125-425E-96F4-7E922E6CBD70}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{024F6DF3-0125-425E-96F4-7E922E6CBD70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{024F6DF3-0125-425E-96F4-7E922E6CBD70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C86A1FB2-4E20-4449-BBC5-3BA4630635BE}
+	EndGlobalSection
+EndGlobal
