@@ -22,7 +22,13 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Functions.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Regularization_Classification.py" />
+    <Compile Include="training_pipeline.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="CondaEnv|CondaEnv|pytorch_env" />
