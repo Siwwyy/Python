@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32002.261
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Linear_Regression", "Linear_Regression\Linear_Regression.pyproj", "{6CCBB4A3-8252-413B-B806-9019DFEC37DA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6CCBB4A3-8252-413B-B806-9019DFEC37DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CCBB4A3-8252-413B-B806-9019DFEC37DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EB4ABDB0-C13F-4000-B40A-3253ED259DCE}
+	EndGlobalSection
+EndGlobal
