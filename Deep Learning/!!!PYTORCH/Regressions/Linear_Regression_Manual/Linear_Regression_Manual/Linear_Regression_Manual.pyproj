@@ -12,6 +12,7 @@
     <Name>Linear_Regression_Manual</Name>
     <RootNamespace>Linear_Regression_Manual</RootNamespace>
     <InterpreterId>CondaEnv|CondaEnv|pytorch_env</InterpreterId>
+    <SuppressEnvironmentCreationPrompt>True</SuppressEnvironmentCreationPrompt>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>

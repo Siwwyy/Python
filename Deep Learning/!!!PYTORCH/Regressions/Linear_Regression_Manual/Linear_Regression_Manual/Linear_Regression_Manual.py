@@ -1,5 +1,3 @@
-
-
 import torch
 import torch.nn as nn
 import numpy as np
@@ -28,7 +26,7 @@ def linear_dataset(train_size:int=1000, test_size:int=100):
 
 
 
-x_train, y_train, x_test, y_test = linear_dataset(1000, 100)
+x_train, y_train, x_test, y_test = linear_dataset(1000, 1000)
 
 
 def plot_xy(x:torch.tensor=torch.rand(100), y:torch.tensor=torch.rand(100)):
@@ -47,18 +45,17 @@ def data_normalization(data:torch.tensor, mean_zero:bool=False) -> torch.tensor:
 # Here we replace the manually computed gradient with autograd
 # Linear regression
 # f = a * x + b
-a_coeff = torch.tensor(0.0, dtype=torch.float32, requires_grad=True).to(device=device)
-b_coeff = torch.tensor(0.0, dtype=torch.float32, requires_grad=True).to(device=device)
+a = torch.tensor(0.0, dtype=torch.float32, requires_grad=True, device=device)
+b = torch.tensor(0.0, dtype=torch.float32, requires_grad=True, device=device)
 
 
 # model output
-def forward(x):
-    return a_coeff * x + b_coeff
+def forward(x, a, b):
+    return a * x + b
 
 # loss = MSE
-def loss(y, y_pred):
-    return ((y_pred - y) ** 2).mean()
-
+def loss(y, y_hat):
+    return ((y_hat - y) ** 2).mean()
 
 # Training
 learning_rate = 0.01
@@ -75,16 +72,16 @@ y_train = y_train.to(device=device)
 
 for epoch in range(n_iters):
     # predict = forward pass
-    #y_pred = forward(x_train)
-    y_pred = a_coeff * x_train + b_coeff
+    y_hat = forward(x_train, a, b)
+
+    if x_train.is_leaf: #if x_train becomes a leaf (somehow), then just detach it from computional graph
+        x_train.detach()
 
     # loss
-    #l = loss(y_train, y_pred)
-
-    l = ((y_pred - y_train) ** 2).mean()
+    l = loss(y_hat, y_train)
 
     # calculate gradients = backward pass
-    l.backward(retain_graph=True)
+    l.sum().backward()
     
     if epoch % 10 == 0:
         print(f'epoch {epoch+1}: loss = {l.item():.8f}')
@@ -92,20 +89,52 @@ for epoch in range(n_iters):
     # update weights
     #w.data = w.data - learning_rate * w.grad
     with torch.no_grad():
-        a_coeff -= learning_rate * a_coeff.grad
-        b_coeff -= learning_rate * b_coeff.grad
+        a -= learning_rate * a.grad
+        b -= learning_rate * b.grad
 
-    # zero the gradients after updating
-    a_coeff.grad.zero_()
-    b_coeff.grad.zero_()
+        # zero the gradients after updating
+        a.grad.zero_()
+        b.grad.zero_()
 
 
-fig = plt.figure(figsize=(10,10))
+if torch.cuda.is_available():
+    a = a.to(device='cpu')
+    b = b.to(device='cpu')
+
+    x_train = x_train.to(device='cpu')
+    y_train = y_train.to(device='cpu')
+
+
+print(a)
+print(b)
+
+fig = plt.figure(figsize=(15,15))
 # Plotting both the curves simultaneously
 plt.scatter(x_train, y_train, color='r')
-plt.plot(x_test, forward(x_test).cpu().detach().numpy(), color='g')
+plt.plot(x_train, forward(x_train, a, b).detach().numpy(), color='g')
 # To load the display window
 plt.show()
 
 
-print(f'Prediction after training: f(5) = {forward(5).item():.3f}')
+## Create tensors.
+#x = torch.tensor(3.)
+#w = torch.tensor(4., requires_grad=True)
+#b = torch.tensor(5., requires_grad=True)
+
+
+## Print tensors
+#print(x)
+#print(w)
+#print(b)
+
+
+## Arithmetic operations
+#y = w * x + b
+#print(y)
+
+## Compute gradients
+#y.backward()
+
+## Display gradients
+#print('dy/dw:', w.grad)
+#print('dy/db:', b.grad)
