@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32002.261
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CNN_Pipeline", "CNN_Pipeline\CNN_Pipeline.pyproj", "{7C53C21A-97DE-41EE-A20A-122D1CBA5A0F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7C53C21A-97DE-41EE-A20A-122D1CBA5A0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C53C21A-97DE-41EE-A20A-122D1CBA5A0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {68734472-EE44-4A72-9BCF-4AB0DA4DC94A}
+	EndGlobalSection
+EndGlobal
