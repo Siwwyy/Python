@@ -1,0 +1,54 @@
+@prefix book: <https://books.google.pl/books#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+
+
+book:Ksiazka rdf:type rdfs:Class.
+book:Autor rdf:type rdfs:Class.
+book:Wydawca rdf:type rdfs:Class.
+
+book:Album rdfs:subClassOf book:Ksiazka.
+book:Filozofia rdfs:subClassOf book:Ksiazka.
+book:Geografia rdfs:subClassOf book:Ksiazka.
+book:Historia rdfs:subClassOf book:Ksiazka.
+book:Nauka rdfs:subClassOf book:Ksiazka.
+book:KsiazkaObojezyczna rdfs:subClassOf book:Ksiazka.
+
+
+book:Angielski rdfs:subClassOf book:KsiazkaObojezyczna.
+book:Francuski rdfs:subClassOf book:KsiazkaObojezyczna.
+book:Niemiecki rdfs:subClassOf book:KsiazkaObojezyczna.
+
+book:Biologia rdfs:subClassOf book:Nauka.
+book:Chemia  rdfs:subClassOf book:Nauka.
+book:Fizyka  rdfs:subClassOf book:Nauka.
+
+book:MapaSwiata rdfs:subClassOf book:Geografia.
+book:Kraje rdfs:subClassOf book:Geografia.
+
+ 
+#uproszczenie
+book:tytul 	rdf:type rdf:Property;
+			rdfs:domain book:Ksiazka;
+			rdfs:range rdfs:Literal.
+			
+			
+book:maAutora 	rdf:type rdf:Property;
+			  rdfs:domain book:Ksiazka.
+book:maAutora 	rdfs:range book:Autor.
+
+book:maWydawce rdf:type rdf:Property.
+book:maWydawce rdfs:domain book:Ksiazka.
+book:maWydawce rdfs:range book:Wydawca.
+
+book:numerISBN rdf:type rdf:Property.
+book:numerISBN rdfs:domain book:Ksiazka.
+book:numerISBN rdfs:range rdfs:Literal.
+
+book:stron rdf:type rdf:Property.
+book:stron rdfs:domain book:Ksiazka.
+book:stron rdfs:range rdfs:Literal.
+
+book:opis rdf:type rdf:Property.
+book:opis rdfs:domain book:Ksiazka.
+book:opis rdfs:range rdfs:Literal.

@@ -1,0 +1,18 @@
+@prefix cos: <http://makolab.com/uconto#>.
+
+<http://moto.pl/uzywane/012345/> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://makolab.com/uconto#Osobowy>.
+<http://moto.pl/uzywane/012345/> cos:przebieg "120000".
+<http://moto.pl/uzywane/012345/> cos:rocznik "2005".
+<http://moto.pl/uzywane/012345/> cos:silnik _:silnik.
+
+_:silnik cos:pojemnosc "1600".
+_:silnik cos:paliwo <http://makolab.com/uconto/pet/diesel>.
+_:silnik cos:moc "95KM".
+
+
+@prefix cecha_samochodu: <http://makolab.com/uconto#>.
+
+<http://moto.pl/uzywane/012345/> cecha_samochodu:wyposazenie _:wyposazenie.
+_:wyposazenie cecha_samochodu:wyposazenie "czujnik deszczu",
+		                          "kontrola trakcji".
+<http://moto.pl/uzywane/012345/> cos:telefon "556789890".

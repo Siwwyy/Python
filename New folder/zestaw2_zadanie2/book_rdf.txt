@@ -1,0 +1,36 @@
+@prefix book: <http://www.uni.lodz.pl/sw/books#>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.book:Album rdf:type rdfs:Class.
+
+
+book:Ksiazka rdf:type rdf:Class.
+book:Historia rdf:type rdf:Class.
+book:Nauka rdf:type rdf:Class.
+
+book:Historia rdf:subClassOf book:Ksiazka.
+book:Nauka rdf:subClassOf book:Ksiazka.
+
+book:Autor rdf:type rdfs:Class.
+book:Kategoria rdf:type rdfs:Class.
+
+book:tytul rdf:type rdfs:Property.
+book:tytul rdfs:domain book:Ksiazka.
+book:tytul rdfs:range rdfs:Literal.
+
+book:jaka_kategoria rdf:type rdfs:Property.
+book:jaka_kategoria rdfs:domain book:Ksiazka.
+book:jaka_kategoria rdfs:range book:Kategoria.
+
+book:maAutora rdf:type rdf:Property.
+book:maAutora rdf:domain book:Ksiazka.
+book:maAutora rdfs:range book:Autor.
+
+@prefix my_book: <https://helion.pl/ksiazki/skuteczny-nowoczesny-c-scott-meyers,e_1vj9.htm#format/e>.
+
+<https://helion.pl/ksiazki/skuteczny-nowoczesny-c-scott-meyers,e_1vj9.htm#format/e> book:tytul "Modern Effective C++".
+<https://helion.pl/ksiazki/skuteczny-nowoczesny-c-scott-meyers,e_1vj9.htm#format/e> rdf:type book:Nauka.
+<https://helion.pl/ksiazki/skuteczny-nowoczesny-c-scott-meyers,e_1vj9.htm#format/e> book:jaka_kategoria <https://pl.wikibooks.org/wiki/Kategoria:Programowanie>.
+<https://helion.pl/ksiazki/skuteczny-nowoczesny-c-scott-meyers,e_1vj9.htm#format/e> book:maAutora <https://pl.wikipedia.org/wiki/Scott_Meyers>.
+
+<https://pl.wikibooks.org/wiki/Kategoria:Programowanie> rdf:type book:Kategoria.
+<https://pl.wikipedia.org/wiki/Scott_Meyers> rdf:type book:Autor.

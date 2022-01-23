@@ -609,7 +609,7 @@ class Logistic_Regression_Auto(nn.Module):
 
 
 net2 = Logistic_Regression_Auto(x_train_normalized.size(1))
-loss2 = net2.train_pass(x_train_normalized, y_train, 1500, 0.01)
+loss2 = net2.train_pass(x_train_normalized, y_train, 1500, 0.0000001)
 #loss2 = net2.train_pass_sgd(x_train_normalized, y_train, 300, 0.05)
 #loss2 = net2.train_pass_mb(x_train_normalized, y_train, 3000, 0.001)
 

@@ -321,7 +321,7 @@ def train_pass(model:nn.Module, data_loader:dict, num_epochs:int=1, lr:float=0.0
 
     return cost_per_epoch, valid_per_epoch
 
-epochs = 1
+epochs = 10
 #loss, valid_loss = train_pass(net, data_loaders_dict, num_epochs=epochs, lr=0.001)
 
 
@@ -330,7 +330,7 @@ epochs = 1
 def plot_loss_valid(loss, valid_loss, epochs):
   fig, axs = plt.subplots(figsize = (20,6))
   plt.plot(range(1,epochs+1), loss, 'b', label='Training loss')
-  plt.plot(range(1,epochs+1), valid_loss, 'b', label='Validation loss')
+  plt.plot(range(1,epochs+1), valid_loss, 'c', label='Validation loss')
   plt.title('Training and validation accuracy')
   plt.ylabel('loss')
   plt.xlabel('epoch')
