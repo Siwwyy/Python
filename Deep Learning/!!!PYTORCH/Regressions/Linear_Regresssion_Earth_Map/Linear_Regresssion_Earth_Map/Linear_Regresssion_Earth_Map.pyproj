@@ -12,6 +12,7 @@
     <Name>Linear_Regresssion_Earth_Map</Name>
     <RootNamespace>Linear_Regresssion_Earth_Map</RootNamespace>
     <InterpreterId>CondaEnv|CondaEnv|pytorch_env</InterpreterId>
+    <SuppressEnvironmentCreationPrompt>True</SuppressEnvironmentCreationPrompt>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -29,6 +30,9 @@
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="CondaEnv|CondaEnv|pytorch_env" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="requirements.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

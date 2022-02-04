@@ -6,6 +6,7 @@ import torch.nn as nn
 import numpy as np
 import pandas as pd
 
+
 # determine the supported device
 def get_device():
     if torch.cuda.is_available():
@@ -23,8 +24,8 @@ class ToTensor(object):
             device: device of torch tensor (by default cpu)
 
         Returns:
-            torch tensor with specified dtype and device.'''
-    def __call__(self, data, columns=[], dtypes=[], device:torch.device=torch.device("cpu")):
+            dictonary with torch tensor/s with specified dtype and device.'''
+    def __call__(self, data, columns=[], dtypes=['float'], device:torch.device=torch.device("cpu")):
 
 
         #image, landmarks = sample['image'], sample['landmarks']
