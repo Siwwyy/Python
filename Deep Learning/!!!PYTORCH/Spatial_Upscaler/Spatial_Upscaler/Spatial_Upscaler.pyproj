@@ -2,15 +2,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>51e61693-aa60-4993-be4c-19d695fa42d5</ProjectGuid>
+    <ProjectGuid>1f926034-727b-4a5e-abcb-4fb40bfdd260</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Upscaling.py</StartupFile>
+    <StartupFile>Spatial_Upscaler.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>Upscaling</Name>
-    <RootNamespace>Upscaling</RootNamespace>
+    <Name>Spatial_Upscaler</Name>
+    <RootNamespace>Spatial_Upscaler</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,7 +21,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Upscaling.py" />
+    <Compile Include="Spatial_Upscaler.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
