@@ -198,8 +198,8 @@ from Interpolation import nearest_neighbor_interpolation, linear_interpolation
 
 #print(nearest_neighbor_interpolation())
 
-tens = torch.tensor([[40, 10], [40, 10]], dtype=torch.float32)
-print(linear_interpolation(tens, (2, 6)))
+tens = torch.tensor([[40, 10], [40, 10], [10, 50]], dtype=torch.float32)
+print(linear_interpolation(tens, (4, 6)))
 ##print(torch.nn.functional.interpolate(tens.view(1,1,2), size=4, mode='linear'))
 #print(linear_interpolation())
 
