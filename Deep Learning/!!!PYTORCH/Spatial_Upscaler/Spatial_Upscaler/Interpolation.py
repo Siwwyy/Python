@@ -44,7 +44,6 @@ def linear_interpolation(tens:torch.tensor=torch.ones(2), new_size:Tuple[int, ..
 
     new_tens = torch.zeros(new_size).to(tens)
     new_tens[..., 0], new_tens[..., -1] = min_val[..., 0], max_val[..., -1]
-    print(new_tens)
     new_tens[:] = (max_val - min_val) * immediate_interp_values + min_val
     return new_tens
 
