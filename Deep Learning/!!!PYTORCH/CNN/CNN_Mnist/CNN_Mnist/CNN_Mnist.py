@@ -45,7 +45,7 @@ class MNIST_Classifier(nn.Module):
                                out_channels=16,            
                                kernel_size=5,              
                                stride=1,                   
-                               padding=2)
+                               padding=2).to(dtype=torch.float16)
         self.conv1_act = nn.ReLU()
         self.conv1_max_pool = nn.MaxPool2d(kernel_size=2)
 

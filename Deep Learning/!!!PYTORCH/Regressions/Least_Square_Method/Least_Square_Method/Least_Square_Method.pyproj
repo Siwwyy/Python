@@ -12,6 +12,7 @@
     <Name>Least_Square_Method</Name>
     <RootNamespace>Least_Square_Method</RootNamespace>
     <InterpreterId>CondaEnv|CondaEnv|pytorch_env</InterpreterId>
+    <SuppressEnvironmentCreationPrompt>True</SuppressEnvironmentCreationPrompt>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>

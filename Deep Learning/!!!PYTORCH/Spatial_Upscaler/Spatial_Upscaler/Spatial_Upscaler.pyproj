@@ -11,6 +11,7 @@
     <OutputPath>.</OutputPath>
     <Name>Spatial_Upscaler</Name>
     <RootNamespace>Spatial_Upscaler</RootNamespace>
+    <InterpreterId>CondaEnv|CondaEnv|pytorch_env</InterpreterId>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,7 +22,22 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="config.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Image_DataLoader.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Data_Set.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Spatial_Upscaler.py" />
+    <Compile Include="Interpolation.py">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="CondaEnv|CondaEnv|pytorch_env" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
