@@ -1,4 +1,5 @@
 [filter "black"]
     clean = cat
-    smudge = python -m black
+    #smudge = python -m black
+    smudge = cat
 	required = true
