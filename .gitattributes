@@ -66,4 +66,4 @@
 ###############
 # OWN FILTERS #
 ###############
-*.py filter=black
+#*.py filter=black
