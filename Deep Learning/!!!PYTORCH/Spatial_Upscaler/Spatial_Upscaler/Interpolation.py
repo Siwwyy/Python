@@ -4,6 +4,7 @@ import numpy as np
 import torch
 import torchvision
 
+from Utils import dim_indexing
 
 def nearest_neighbor_interpolation(tens: torch.tensor=torch.rand(2, 2), new_size: Tuple[int, ...]=(8, 8)) -> torch.tensor:
     """
@@ -34,14 +35,16 @@ def linear_interpolation(tens: torch.tensor=torch.ones(2), new_size: Tuple[int, 
         New Tensor with new values linearly interpolated
     """
     assert (tens.shape[-1] < new_size[-1]) & (tens.dim() == len(new_size)), "Shape of new tensor '{0}' has to be greater at last dim and equal at others to original '{1}'".format(tens.shape, new_size)
-    assert dim > tens.dim(), "Dim param '{0}' is greater than tensor dims '{1}'".format(dim, tens.dim())
+    assert dim <= tens.dim(), "Dim param '{0}' is greater than tensor dims '{1}'".format(dim, tens.dim())
     immediate_interp_values = torch.linspace(start=0.0, end=1.0, steps=new_size[-1]).unsqueeze(0)
     
-    left_val = tens[..., 0].unsqueeze(1)
-    right_val = tens[..., -1].unsqueeze(1)
+    left_elem_idx = dim_indexing(tens.dim(), dim=dim, indice=0)
+    right_elem_idx = dim_indexing(tens.dim(), dim=dim, indice=-1)
+    left_val = tens[left_elem_idx].unsqueeze(1)
+    right_val = tens[right_elem_idx].unsqueeze(1)
 
     new_tens = torch.zeros(new_size).to(tens)
-    new_tens[..., 0], new_tens[..., -1] = left_val[..., 0], right_val[..., -1]
+    new_tens[left_elem_idx], new_tens[right_elem_idx] = left_val[left_elem_idx], right_val[right_elem_idx]
     new_tens[:] = (right_val - left_val) * immediate_interp_values + left_val
     return new_tens
 

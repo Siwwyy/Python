@@ -35,6 +35,9 @@
     <Compile Include="Interpolation.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Utils.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="CondaEnv|CondaEnv|pytorch_env" />
