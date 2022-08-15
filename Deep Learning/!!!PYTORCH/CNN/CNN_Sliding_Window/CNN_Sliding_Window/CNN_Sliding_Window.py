@@ -51,7 +51,7 @@ class Custom_Dataset(torch.utils.data.Dataset):
 '''
 dataset = Custom_Dataset(root_dir="dataset/")
 
-fig = plt.figure()
+fig = plt.figure(figsize=(12,3))
 
 for i in range(len(dataset)):
     sample = dataset[i]
