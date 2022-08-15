@@ -450,7 +450,6 @@ ipch/
 *.cachefile
 *.VC.db
 *.VC.VC.opendb
-*.pyproj
 
 # Visual Studio profiler
 *.psess
